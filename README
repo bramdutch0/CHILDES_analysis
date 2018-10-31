@@ -1,0 +1,79 @@
+This directory contains two executable programs "artificial_data_experiment" and
+"real_data_experiment" which are used on CHILDES data found at https://childes.talkbank.org/. It also contains libraries "extract_data.py", "Helper.py" and "Learner.py" which are used for the experiments.
+
+
+--------------------
+real_data_experiment
+--------------------
+This file tests a set of learners on data from a longitudinal 
+study from the CHILDES database and calculates F1, precision, and
+recall for each learner by taking nonchild utterances as input to the 
+learners and child data as tests where the constructions the child
+knows are compared to the predicted constructions each learner knows.
+
+To run this program, use "python real_data_experiment.py [Directory 
+with data in it]." The directory should contain files with preparsed data of the form
+*[speaker]: [Utterance]
+%gra: [parse of sentence]
+And should use "CHI" to indicate the child is speaking
+
+A list of learners is set up in the main() function. This list can be altered.
+Documentation on the parameters for different learners can be found in 
+Learner.py
+
+The output of this program is stored in "results/real_data/[Directory with 
+data in it]/". Output includes precision, recall, and F1 files which contain
+the respective values at each test point as well as average_precision, average_recall,
+and average_F1 that averages for each learner over all test points.
+
+--------------------------
+Arfiticial Data Experiment
+--------------------------
+This program extracts a list of constructions from a CHILDES
+file and tests a set of learners on the data to see the order 
+that constructions are acquired and the speed at which constructions
+are acquired. This program tests both a uniform distribution over 
+the constructions present and an observed distribution based on the
+frequency in the CHILDES files.
+
+To run this program use "python artificial_data_experiment.py [directory
+where data is stored]". The directory should contain files with preparsed data of the form
+*[speaker]: [Utterance]
+%gra: [parse of sentence]
+And should use "CHI" to indicate the child is speaking
+
+A list of learners is set up in the main() function. This list can be altered.
+Documentation on the parameters for different learners can be found in 
+Learner.py
+
+The output of this program is stored in "results/artificial_data/[directory where 
+data is stored]
+Output includes 
+uniform/number_constructions- the average number of constructions every 10 time steps averaged
+	over all of the experiments for a uniform distribution
+uniform/order- the average order constructions were acquired over all the experiments
+	for a uniform distribution
+observed/number_constructions- the average number of constructions every 10 time steps averaged
+	over all of the experiments for an observed distribution
+observed/order- the average order constructions were acquired over all the experiments
+	for an observed distribution
+
+The order and number of constructions for each trial are also stored in seperate folders
+
+--------------------------
+Input files
+--------------------------
+Both experimental programs are run on longitudinal databases that have been
+parsed already on the CHILDES website https://childes.talkbank.org/.
+
+The following files will work with these programs:
+-Eng-UK/Lara
+-Eng-UK/Wells
+-Eng-NA/Bloom
+-Eng-NA/Braunwald
+-Eng-NA/Kubzaj
+-Eng-NA/MacWhinney
+-Spanish/Marrero
+-Spanish/Ornat
+-Spanish/SerraSole
+
