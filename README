@@ -46,6 +46,8 @@ A list of learners is set up in the main() function. This list can be altered.
 Documentation on the parameters for different learners can be found in 
 Learner.py
 
+Will run 
+
 The output of this program is stored in "results/artificial_data/[directory where 
 data is stored]
 Output includes 
@@ -67,12 +69,20 @@ Both experimental programs are run on longitudinal databases that have been
 parsed already on the CHILDES website https://childes.talkbank.org/.
 
 The following files will work with these programs:
+-Bilingual/CHCC
+-Bilingual/Deuchar
+-Bilingual/Leo
+-Bilingual/Watkins
+-Bilingual/YipMatthews
+-Chinese/Tong
+-Chinese/Zhou3
 -Eng-UK/Lara
 -Eng-UK/Wells
 -Eng-NA/Bloom
 -Eng-NA/Braunwald
 -Eng-NA/Kubzaj
 -Eng-NA/MacWhinney
+-Other/Berman
 -Spanish/Marrero
 -Spanish/Ornat
 -Spanish/SerraSole
