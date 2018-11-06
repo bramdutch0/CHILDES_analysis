@@ -415,5 +415,4 @@ if __name__ == "__main__":
 	if (DATA_DIR[-1] != "/"):
 		DATA_DIR += "/"
 	OUTPUT_DIRECTORY = "results/real_data/" + DATA_DIR
-	print(OUTPUT_DIRECTORY);
 	main()

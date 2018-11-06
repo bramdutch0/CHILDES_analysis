@@ -422,8 +422,10 @@ class SpeechData:
 		files = os.listdir(dirname)
 		files.sort()
 		for filename in files:
-			print("adding from %s" % filename)
-			self.add_file(str(dirname + "/" + filename))
+			#ignore files that are not .cha files
+			if (".cha" in filename):
+				print("adding from %s" % filename)
+				self.add_file(str(dirname + "/" + filename))
 
 	#get the likelihood within the window [start, end]
 	#inputs: 	start and end are both ints in the range [0, 100] that represent
