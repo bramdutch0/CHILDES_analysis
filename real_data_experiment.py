@@ -111,6 +111,7 @@ def run_real_experiments(speech_data, learners, directory):
 	for i in range(len(speech_data.get_utterances_in_order())):
 		print("%s/%s" % (i, len(speech_data.get_utterances_in_order())))
 		utterance = speech_data.get_utterances_in_order()[i]
+		print("%s: %s (%s)" % (utterance.get_speaker(), utterance.get_text()[:], utterance.get_verb_construction()))
 		#if parent utterance, show to learners
 		if (utterance.get_speaker() != "CHI"):
 			for learner in learners:
