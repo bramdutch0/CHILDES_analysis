@@ -475,7 +475,12 @@ class SpeechData:
 				child_produced.append(utterance)
 		return child_produced
 
-
+	#resets speech data. Used to save memory
+	def clear(self):
+		self.files = []
+		self.constructions_list = []
+		self.child_constructions_list = []
+		self.utterances_in_order = []
 
 '''
 Childes file

@@ -104,57 +104,65 @@ def run_real_experiments(speech_data, learners, directory):
 	recall = []
 	precision = []
 	f1 = []
+	#store all files in order
+	files = os.listdir(DATA_DIR)
+	files.sort()
 
-	#feed in utterances in order
-	#keep track of the number of instances in known_constructions
-	known_const_num = 0
-	for i in range(len(speech_data.get_utterances_in_order())):
-		print("%s/%s" % (i, len(speech_data.get_utterances_in_order())))
-		utterance = speech_data.get_utterances_in_order()[i]
-		print("%s: %s (%s)" % (utterance.get_speaker(), utterance.get_text()[:], utterance.get_verb_construction()))
-		#if parent utterance, show to learners
-		if (utterance.get_speaker() != "CHI"):
-			for learner in learners:
-				learners[learner].take_input(utterance.get_verb_construction())
-		#if child utterance, update child_construction and update lists
-		else:
-			curr_const = utterance.get_verb_construction()
-			if (curr_const not in child_construction):
-				child_construction.append(curr_const)
-			known_constructions.append({})
-			TP.append({})
-			FP.append({})
-			FN.append({})
-			recall.append({})
-			precision.append({})
-			f1.append({})
-			known_constructions[known_const_num]["child"] = child_construction
-			for learner in learners:
-				known_constructions[known_const_num][learner] = learners[learner].get_known()
-				curr_TP = get_TP(child_construction, learners[learner].get_known())
-				curr_FP = get_FP(child_construction, learners[learner].get_known())
-				curr_FN = get_FN(child_construction, learners[learner].get_known())
-				TP[known_const_num][learner] = curr_TP
-				FP[known_const_num][learner] = curr_FP
-				FN[known_const_num][learner] = curr_FN
-				
-				#take care of case of division by 0. 
-				#recall (TP + FN can't be 0, so don't worry about that case)
-				recall[known_const_num][learner] = float(len(curr_TP))/(len(curr_TP) + len(curr_FN))
-				#precision (if failed, set to 1)
-				try:
-					precision[known_const_num][learner] = float(len(curr_TP))/(len(curr_TP) + len(curr_FP))
-				except:
-					precision[known_const_num][learner] = 1
-				#f1 (if failed, set to 0)
-				try:
-					f1[known_const_num][learner] = 2/((1/recall[known_const_num][learner]) + (1/precision[known_const_num][learner]))
-				except:
-					f1[known_const_num][learner] = 0 
+	for infile in files:
+		filename = DATA_DIR + infile
+		#print(filename)
+		speech_data.add_file(filename)
+		#feed in utterances in order
+		#keep track of the number of instances in known_constructions
+		known_const_num = 0
+		for i in range(len(speech_data.get_utterances_in_order())):
+			#print("%s/%s" % (i, len(speech_data.get_utterances_in_order())))
+			utterance = speech_data.get_utterances_in_order()[i]
+			print("%s: %s (%s)" % (utterance.get_speaker(), utterance.get_text()[:], utterance.get_verb_construction()))
+			#if parent utterance, show to learners
+			if (utterance.get_speaker() != "CHI"):
+				for learner in learners:
+					learners[learner].take_input(utterance.get_verb_construction())
+			#if child utterance, update child_construction and update lists
+			else:
+				curr_const = utterance.get_verb_construction()
+				if (curr_const not in child_construction):
+					child_construction.append(curr_const)
+				known_constructions.append({})
+				TP.append({})
+				FP.append({})
+				FN.append({})
+				recall.append({})
+				precision.append({})
+				f1.append({})
+				known_constructions[known_const_num]["child"] = child_construction
+				for learner in learners:
+					known_constructions[known_const_num][learner] = learners[learner].get_known()
+					curr_TP = get_TP(child_construction, learners[learner].get_known())
+					curr_FP = get_FP(child_construction, learners[learner].get_known())
+					curr_FN = get_FN(child_construction, learners[learner].get_known())
+					TP[known_const_num][learner] = curr_TP
+					FP[known_const_num][learner] = curr_FP
+					FN[known_const_num][learner] = curr_FN
 					
-				
-				
-			known_const_num += 1
+					#take care of case of division by 0. 
+					#recall (TP + FN can't be 0, so don't worry about that case)
+					recall[known_const_num][learner] = float(len(curr_TP))/(len(curr_TP) + len(curr_FN))
+					#precision (if failed, set to 1)
+					try:
+						precision[known_const_num][learner] = float(len(curr_TP))/(len(curr_TP) + len(curr_FP))
+					except:
+						precision[known_const_num][learner] = 1
+					#f1 (if failed, set to 0)
+					try:
+						f1[known_const_num][learner] = 2/((1/recall[known_const_num][learner]) + (1/precision[known_const_num][learner]))
+					except:
+						f1[known_const_num][learner] = 0 
+						
+					
+					
+				known_const_num += 1
+		speech_data.clear()
 
 
 	##############################################
@@ -316,9 +324,9 @@ def main():
 	###############################################################
 	#	get constructions and data_distribution from speech data
 	###############################################################
-	print("Extracting data")
+	#print("Extracting data")
 	speech_data = Extract_data.SpeechData()
-	speech_data.add_from_dir(DATA_DIR)
+	#speech_data.add_from_dir(DATA_DIR)
 
 
 	###################################################
