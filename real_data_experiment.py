@@ -107,8 +107,14 @@ def run_real_experiments(speech_data, learners, directory):
 	#store all files in order
 	files = os.listdir(DATA_DIR)
 	files.sort()
+	cha_files = []
+	for filename in files:
+			#ignore files that are not .cha files
+			if (".cha" in filename):
+				cha-files.append(filename)
+	cha_files.sort()
 
-	for infile in files:
+	for infile in cha_files:
 		filename = DATA_DIR + infile
 		#print(filename)
 		speech_data.add_file(filename)
