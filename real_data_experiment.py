@@ -111,7 +111,7 @@ def run_real_experiments(speech_data, learners, directory):
 	for filename in files:
 			#ignore files that are not .cha files
 			if (".cha" in filename):
-				cha-files.append(filename)
+				cha_files.append(filename)
 	cha_files.sort()
 
 	for infile in cha_files:
@@ -184,12 +184,13 @@ def run_real_experiments(speech_data, learners, directory):
 		for learner in learners:
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
-		for i in range(len(known_constructions)):
+		for i in range(len(known_constructions)-1):
 			curr_line = ""
 			for learner in learners:
 				curr_line += "%s, " % str(recall[i][learner])
 			curr_line += "\n"
 			outfile.write(curr_line)
+
 
 	#precision
 	with open(precision_file, "w+") as outfile:
@@ -197,7 +198,7 @@ def run_real_experiments(speech_data, learners, directory):
 		for learner in learners:
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
-		for i in range(len(known_constructions)):
+		for i in range(len(known_constructions)-1):
 			curr_line = ""
 			for learner in learners:
 				curr_line += "%s, " % str(precision[i][learner])
@@ -210,7 +211,7 @@ def run_real_experiments(speech_data, learners, directory):
 		for learner in learners:
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
-		for i in range(len(known_constructions)):
+		for i in range(len(known_constructions)-1):
 			curr_line = ""
 			for learner in learners:
 				curr_line += "%s, " % str(f1[i][learner])
