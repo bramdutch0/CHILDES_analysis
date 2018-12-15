@@ -94,13 +94,15 @@ def run_real_experiments(speech_data, learners, directory):
 	#are the only known constructions
 	child_construction = []
 	#also keep track of the known constructions of the learners and the child
-	#at each occurrence of a child utterance
+	#at the time a child utterance is made
 	known_constructions = []
 	#keep track of true positive, false positive, and false negative
+	#TP[i][learner] is the TP of learner at the ith child utterance
 	TP = []
 	FP = []
 	FN = []
 	#also keep track of recall, precision, and f1
+	#recall[i][learner] is the recall of learner at the ith child utterance
 	recall = []
 	precision = []
 	f1 = []
@@ -114,13 +116,16 @@ def run_real_experiments(speech_data, learners, directory):
 				cha_files.append(filename)
 	cha_files.sort()
 
+	#increment every time a child construction is seen to keep track of 
+	#position in all of the lists
+	known_const_num = 0
+
 	for infile in cha_files:
 		filename = DATA_DIR + infile
 		#print(filename)
 		speech_data.add_file(filename)
 		#feed in utterances in order
 		#keep track of the number of instances in known_constructions
-		known_const_num = 0
 		for i in range(len(speech_data.get_utterances_in_order())):
 			#print("%s/%s" % (i, len(speech_data.get_utterances_in_order())))
 			utterance = speech_data.get_utterances_in_order()[i]
@@ -184,7 +189,9 @@ def run_real_experiments(speech_data, learners, directory):
 		for learner in learners:
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
+		#print(len(known_constructions))
 		for i in range(len(known_constructions)-1):
+			#print(i)
 			curr_line = ""
 			for learner in learners:
 				curr_line += "%s, " % str(recall[i][learner])
