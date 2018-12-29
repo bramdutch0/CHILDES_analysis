@@ -134,6 +134,7 @@ def run_real_experiments(speech_data, learners, directory):
 			if (utterance.get_speaker() != "CHI"):
 				for learner in learners:
 					learners[learner].take_input(utterance.get_verb_construction())
+			
 			#if child utterance, update child_construction and update lists
 			else:
 				curr_const = utterance.get_verb_construction()
@@ -169,11 +170,12 @@ def run_real_experiments(speech_data, learners, directory):
 						f1[known_const_num][learner] = 2/((1/recall[known_const_num][learner]) + (1/precision[known_const_num][learner]))
 					except:
 						f1[known_const_num][learner] = 0 
-						
+					
 					
 					
 				known_const_num += 1
 		speech_data.clear()
+
 
 
 	##############################################
@@ -190,7 +192,7 @@ def run_real_experiments(speech_data, learners, directory):
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
 		#print(len(known_constructions))
-		for i in range(len(known_constructions)-1):
+		for i in range(len(known_constructions)):
 			#print(i)
 			curr_line = ""
 			for learner in learners:
@@ -205,7 +207,7 @@ def run_real_experiments(speech_data, learners, directory):
 		for learner in learners:
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
-		for i in range(len(known_constructions)-1):
+		for i in range(len(known_constructions)):
 			curr_line = ""
 			for learner in learners:
 				curr_line += "%s, " % str(precision[i][learner])
@@ -218,7 +220,7 @@ def run_real_experiments(speech_data, learners, directory):
 		for learner in learners:
 			first_line += learner + ", "
 		outfile.write(first_line + "\n")
-		for i in range(len(known_constructions)-1):
+		for i in range(len(known_constructions)):
 			curr_line = ""
 			for learner in learners:
 				curr_line += "%s, " % str(f1[i][learner])
